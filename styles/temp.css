@@ -1,0 +1,9 @@
+.tmp {
+    text-align: center;
+    border-radius: 1px;
+    justify-content: space-around;
+    cursor: pointer;
+    overflow-y: scroll;
+
+
+}

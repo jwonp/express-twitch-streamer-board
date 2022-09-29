@@ -1,0 +1,34 @@
+.wrapper {
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.content {
+    border: 1px solid sandybrown;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    position: relative !important;
+    overflow: hidden !important;
+    height: 100% !important;
+    /* border: 1px solid white; */
+}
+
+.streamerMode {
+    width: 400px;
+}
+
+.container {
+    border: 1px solid blanchedalmond;
+    padding: 16px;
+    overflow: hidden !important;
+    position: relative !important;
+    -moz-box-flex: 1 !important;
+    flex-grow: 1 !important;
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: var(--z-index-default) !important;
+
+}

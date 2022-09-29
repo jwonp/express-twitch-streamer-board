@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.env
+sql
+sql/table/streamer.sql
+sql/table/token.sql
+.gitignore
+todo.txt
+DumyCodes

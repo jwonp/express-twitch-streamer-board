@@ -1,0 +1,13 @@
+.navigatorItem {
+    border: 1px solid #e7f6f2;
+    width: 22px;
+    border-radius: 7px;
+    padding: 3px;
+    margin: 4px;
+}
+
+.hide {
+    display: none;
+}
+
+.visble {}
