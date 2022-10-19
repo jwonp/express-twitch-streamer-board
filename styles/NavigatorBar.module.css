@@ -13,7 +13,8 @@
 
 .globalnav::after {
     content: "";
-    height: 5px;
+    /* height: 5px; */
+    height: 1%;
     opacity: 1;
     pointer-events: none;
     position: absolute;
@@ -25,7 +26,8 @@
 }
 
 .container {
-    height: 56px;
+    height: 5%;
+    /* height: 56px; */
     padding: 0 16px;
     display: flex;
     flex-direction: row;

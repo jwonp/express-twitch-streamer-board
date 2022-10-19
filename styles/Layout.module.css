@@ -1,7 +1,7 @@
 .wrapper {
     margin: 0 auto;
     text-align: center;
-
+    height: 100%;
 }
 
 .content {
@@ -10,7 +10,7 @@
     flex-wrap: nowrap !important;
     position: relative !important;
     overflow: hidden !important;
-    height: 100% !important;
+    height: 95% !important;
     /* border: 1px solid white; */
 }
 

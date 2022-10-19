@@ -2,8 +2,8 @@
     margin: 0 auto;
     padding: 3px;
     border: 1px solid salmon;
-    width: 80%;
-    height: 690px;
+    width: 90%;
+    height: 95%;
 }
 
 .editorHeader {
@@ -37,24 +37,50 @@
     border-radius: 3px;
 }
 
-.editorBody {}
+
 
 .toolbar {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin: 3px;
     padding: 5px;
-    height: 40px;
+    height: 50px;
     border: 1px solid wheat;
+}
+
+.titleWrapper {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.titleLabel {
+    font-size: 20px;
+    text-align: left;
+    color: #E7F6F2;
+}
+
+.titleInput {
+    font-size: 26px;
+    padding: 0;
+    background-color: #2C3333;
+    border: none;
+    border: 1px solid #e7f6f2;
+
+    color: #E7F6F2;
+}
+
+.titleInput:focus {
+    outline: none;
 }
 
 .content {
     margin: 3px;
     padding: 5px;
     border: 1px solid darkseagreen;
-    height: 540px;
+    height: 735px;
     font-size: 26px;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     text-align: left;
 }
 
@@ -62,7 +88,14 @@
     outline: none;
 }
 
-.contentImgWrapper {}
+
+
+.contentAddBtn {
+    border: 1px solid tan;
+    text-align: center;
+}
+
+
 
 .contentImg {
     width: 100%;

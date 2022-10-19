@@ -6,6 +6,9 @@ export default function Home() {
   async function getList() {
     return await axios.get("/twitch/getIndexStreamerList");
   }
+  async function testChatServer() {
+    return await axios.get("/test/session");
+  }
   return (
     <div>
       <div>환영합니다</div>
@@ -20,6 +23,19 @@ export default function Home() {
         }}
       >
         get list
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          if (data) {
+            testChatServer().then((res) => {
+              console.log(res.data);
+              console.log("good");
+            });
+          }
+        }}
+      >
+        test chat server
       </button>
     </div>
   );

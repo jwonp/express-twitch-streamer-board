@@ -17,6 +17,7 @@ const AuthRouter = require("./routes/authenticate");
 const FileRouter = require("./routes/file");
 const BoardRouter = require("./routes/board");
 const TwitchRouter = require("./routes/twitch");
+const TestRouter = require("./routes/test");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -47,10 +48,12 @@ app.prepare().then(() => {
       uriDecodeFileNames: true,
     })
   );
+
   server.use("/authenticate", AuthRouter);
   server.use("/file", FileRouter);
   server.use("/board", BoardRouter);
   server.use("/twitch", TwitchRouter);
+  server.use("/test", TestRouter);
   // If user has an authenticated session, display it, otherwise display link to authenticate
   server.get("/success", function (req: any, res: any) {
     if (req.session && req.session.passport && req.session.passport.user) {

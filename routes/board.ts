@@ -1,6 +1,7 @@
 const BoardExpress = require("express");
 var CryptoJS = require("crypto-js");
 import { runQuery } from "../db";
+const axios = require("axios").default;
 const BoardRouter = BoardExpress.Router();
 interface SQLcontentType {
   content_id: string;
@@ -11,8 +12,16 @@ interface SQLcontentType {
   update_date: number;
   content: string;
 }
+interface ContentResponseType {
+  board: string;
+  title: string;
+  author: string;
+  update_date: number;
+  content: string;
+}
 BoardRouter.post("/uploadContent", (req: any, res: any) => {
   if (req.session && req.session.passport && req.session.passport.user) {
+    console.log(req.body);
     const now = Date.now();
     const SqlData: SQLcontentType = {
       content_id: CryptoJS.AES.encrypt(
@@ -34,7 +43,8 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
       .then(() => {
         res.send("Success");
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         res.send("Fail");
       });
   }
@@ -50,7 +60,7 @@ BoardRouter.get("/getboardlist", (req: any, res: any) => {
       .then((response) => {
         res.json(response);
       })
-      .catch(() => {
+      .catch((reason) => {
         res.send("Fail");
       });
   }
@@ -58,8 +68,24 @@ BoardRouter.get("/getboardlist", (req: any, res: any) => {
 BoardRouter.post("/getContent", (req: any, res: any) => {
   if (req.session && req.session.passport && req.session.passport.user) {
     getContent(req.body.id)
-      .then((response: any[]) => {
-        res.json(response[0]);
+      .then((getContentResponse: any[]) => {
+        const result = getContentResponse[0];
+        getDisplayNameByUserID(result.author).then(
+          (getDisplayNameByUserIDResponse) => {
+            const display_name = getDisplayNameByUserIDResponse[0].display_name;
+            result.content = result.content
+              .replaceAll("%3A", ":")
+              .replaceAll("%2F", "/");
+            const ContentResponse: ContentResponseType = {
+              board: convertTitle(result.board),
+              title: result.title,
+              author: display_name,
+              update_date: result.update_date,
+              content: result.content,
+            };
+            res.json(ContentResponse);
+          }
+        );
       })
       .catch(() => {
         res.send("Fail");
@@ -76,6 +102,20 @@ function getTitleName(name: string): string {
       return "RES";
     case "collabo":
       return "COL";
+    default:
+      return "";
+  }
+}
+function convertTitle(name: string): string {
+  switch (name) {
+    case "NOT":
+      return "공지사항";
+    case "SUM":
+      return "컨텐츠 정리";
+    case "RES":
+      return "컨텐츠 진행 결과";
+    case "COL":
+      return "콜라보 제의";
     default:
       return "";
   }
@@ -106,6 +146,11 @@ async function getContentsBySelected(
     (selected - 1) * 10
   }, 10
   `);
+}
+async function getDisplayNameByUserID(id: number): Promise<any> {
+  return await runQuery(
+    `SELECT display_name FROM streamer WHERE user_id=${id}`
+  );
 }
 module.exports = BoardRouter;
 export {};

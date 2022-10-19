@@ -1,11 +1,15 @@
 const mysql = require("mysql");
+const dotenv = require("dotenv");
+const result = dotenv.config({ path: "./.env" });
+
+console.log(process.env.DB_HOST);
 const mysqlPool = mysql.createPool({
-  host: "127.0.0.1",
-  port: 3306,
-  user: "root",
-  password: "qwerty",
-  database: "TwitchChatSite",
-  connectionLimit: 5,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  connectionLimit: process.env.DB_CONNECTIONLIMIT,
 });
 
 export const runQuery = (query: string) => {

@@ -1,5 +1,6 @@
 import Navigator from "./Navigator";
 import styles from "../styles/Layout.module.css";
+import ChatBox from "./ChatBox";
 
 export default function Layout(props: { children: JSX.Element }) {
   return (
@@ -10,7 +11,9 @@ export default function Layout(props: { children: JSX.Element }) {
         <div id={"root-layout"} className={styles.container}>
           {props.children}
         </div>
-        <div className={styles.streamerMode}>hi</div>
+        <div className={styles.streamerMode}>
+          <ChatBox />
+        </div>
       </div>
     </div>
   );
