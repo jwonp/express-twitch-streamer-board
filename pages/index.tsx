@@ -16,6 +16,7 @@ export default function Home() {
         type="button"
         onClick={() => {
           if (data) {
+            console.log(data);
             getList().then((res) => {
               console.log(res.data);
             });

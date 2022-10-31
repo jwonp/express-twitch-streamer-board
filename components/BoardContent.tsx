@@ -6,6 +6,7 @@ import React from "react";
 import Image from "next/image";
 import ReactDOM from "react-dom";
 interface dataType {
+  content_id: string;
   board: string;
   title: string;
   author: string;
@@ -19,7 +20,9 @@ export default function BoardContent() {
   const $content = useRef<NodeList>();
 
   const [data, setData] = useState<dataType>(null);
-
+  async function addViewCount(contentID: string) {
+    await axios.get(`/board/addViewCount/${contentID}`);
+  }
   async function getContent() {
     return await axios.post(
       "/board/getContent",
@@ -60,6 +63,8 @@ export default function BoardContent() {
 
       setData(res.data);
       setLoaing(true);
+      console.log(router.query.index as string);
+      addViewCount(router.query.index as string);
     });
   }, []);
 

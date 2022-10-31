@@ -7,7 +7,6 @@ interface dateType {
   title: string;
   author: string;
   views: number;
-  likes: number;
   date: number;
 }
 
