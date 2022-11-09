@@ -5,21 +5,15 @@ import styles from "../styles/BoardContent.module.css";
 import React from "react";
 import Image from "next/image";
 import ReactDOM from "react-dom";
-interface dataType {
-  content_id: string;
-  board: string;
-  title: string;
-  author: string;
-  update_date: number;
-  content: string;
-}
+import { board_content } from "../types/content";
+
 export default function BoardContent() {
   const [loading, setLoaing] = useState<Boolean>(false);
   const router = useRouter();
   const index = router.asPath.split("=")[1];
   const $content = useRef<NodeList>();
 
-  const [data, setData] = useState<dataType>(null);
+  const [data, setData] = useState<board_content>(null);
   async function addViewCount(contentID: string) {
     await axios.get(`/board/addViewCount/${contentID}`);
   }

@@ -1,7 +1,6 @@
-import { response } from "express";
-
-const FileExpress = require("express");
-const FileRouter = FileExpress.Router();
+// const FileExpress = require("express");
+import { express } from "../server";
+const FileRouter = express.Router();
 const axios = require("axios").default;
 const fs = require("fs");
 const FormData = require("form-data");

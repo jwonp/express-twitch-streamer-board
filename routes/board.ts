@@ -1,32 +1,21 @@
 const BoardExpress = require("express");
 var CryptoJS = require("crypto-js");
 import { runQuery } from "../db";
-const axios = require("axios").default;
+import { getEngToShort, getShortToKorean } from "../funcs/convertBoardTitle";
+import {
+  content as content_type,
+  board_content as board_content_type,
+} from "../types/content";
+// const axios = require("axios").default;
 const BoardRouter = BoardExpress.Router();
-interface SQLcontentType {
-  content_id: string;
-  board: string;
-  title: string;
-  author: string;
-  date: number;
-  update_date: number;
-  views: number;
-  content: string;
-}
-interface ContentResponseType {
-  board: string;
-  title: string;
-  author: string;
-  update_date: number;
-  content: string;
-}
+
 BoardRouter.post("/uploadContent", (req: any, res: any) => {
   if (req.session && req.session.passport && req.session.passport.user) {
     console.log(req.body);
     const now = Date.now();
-    const SqlData: SQLcontentType = {
+    const SqlData: content_type = {
       content_id: CryptoJS.AES.encrypt(
-        `${getTitleName(req.body.board)}?${now}?${
+        `${getEngToShort(req.body.board)}?${now}?${
           req.session.passport.user.data[0].id
         }`,
         process.env.BOARD_SECRET
@@ -34,7 +23,7 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
         .toString()
         .replaceAll("+", "3")
         .replaceAll("/", "5"),
-      board: getTitleName(req.body.board),
+      board: getEngToShort(req.body.board),
       title: req.body.title,
       author: req.session.passport.user.data[0].id,
       date: now,
@@ -52,13 +41,13 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
   }
 });
 BoardRouter.get("/getboardindex", (req: any, res: any) => {
-  getallContentCountByBoard(getTitleName(req.query.board)).then((response) => {
+  getallContentCountByBoard(getEngToShort(req.query.board)).then((response) => {
     res.json(response[0]);
   });
 });
 BoardRouter.get("/getboardlist", (req: any, res: any) => {
   if (req.session && req.session.passport && req.session.passport.user) {
-    getContentsBySelected(getTitleName(req.query.board), req.query.index)
+    getContentsBySelected(getEngToShort(req.query.board), req.query.index)
       .then((response) => {
         res.json(response);
       })
@@ -79,8 +68,8 @@ BoardRouter.post("/getContent", (req: any, res: any) => {
             result.content = result.content
               .replaceAll("%3A", ":")
               .replaceAll("%2F", "/");
-            const ContentResponse: ContentResponseType = {
-              board: convertTitle(result.board),
+            const ContentResponse: board_content_type = {
+              board: getShortToKorean(result.board),
               title: result.title,
               author: display_name,
               update_date: result.update_date,
@@ -153,40 +142,13 @@ BoardRouter.get("/addViewCount/:id", function (req: any, res: any) {
     addViews(contentID);
   }
 });
-function getTitleName(name: string): string {
-  switch (name) {
-    case "notice":
-      return "NOT";
-    case "summary":
-      return "SUM";
-    case "result":
-      return "RES";
-    case "collabo":
-      return "COL";
-    default:
-      return "";
-  }
-}
-function convertTitle(name: string): string {
-  switch (name) {
-    case "NOT":
-      return "공지사항";
-    case "SUM":
-      return "컨텐츠 정리";
-    case "RES":
-      return "컨텐츠 진행 결과";
-    case "COL":
-      return "콜라보 제의";
-    default:
-      return "";
-  }
-}
+
 async function getContent(id: string) {
   return await runQuery(
     `SELECT board, title, author, update_date, content FROM content WHERE content_id = "${id}"`
   );
 }
-async function addContent(data: SQLcontentType): Promise<any> {
+async function addContent(data: content_type): Promise<any> {
   return await runQuery(
     `INSERT INTO content VALUES ("${data.content_id}","${data.board}","${data.title}","${data.author}","${data.date}","${data.update_date}","${data.content}","${data.views}")`
   );

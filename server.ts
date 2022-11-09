@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 const result = dotenv.config({ path: "./.env" });
 
-const express = require("express");
+export const express = require("express");
 const next = require("next");
 const session = require("express-session");
 const passport = require("passport");
@@ -17,7 +17,8 @@ const AuthRouter = require("./routes/authenticate");
 const FileRouter = require("./routes/file");
 const BoardRouter = require("./routes/board");
 const TwitchRouter = require("./routes/twitch");
-const TestRouter = require("./routes/test");
+const WebSocketRouter = require("./routes/websocket");
+const UserRouter = require("./routes/user");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -53,7 +54,8 @@ app.prepare().then(() => {
   server.use("/file", FileRouter);
   server.use("/board", BoardRouter);
   server.use("/twitch", TwitchRouter);
-  server.use("/test", TestRouter);
+  server.use("/websocket", WebSocketRouter);
+  server.use("/user", UserRouter);
   // If user has an authenticated session, display it, otherwise display link to authenticate
   server.get("/success", function (req: any, res: any) {
     if (req.session && req.session.passport && req.session.passport.user) {
@@ -166,7 +168,6 @@ passport.use(
                 `INSERT INTO token VALUES ("${profile.data[0].id}","${profile.accessToken}","${profile.refreshToken}")`,
                 function (error: any, results: any, fields: any) {
                   if (error) throw error;
-                  console.log(results);
                 }
               );
             } else {

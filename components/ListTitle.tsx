@@ -1,24 +1,10 @@
 import Link from "next/link";
-
+import { getEngToKorean } from "../funcs/convertBoardTitle";
 export default function ListTitle(props: { name: string }) {
-  function getTitleName(name: string): string {
-    switch (name) {
-      case "notice":
-        return "공지사항";
-      case "summary":
-        return "컨텐츠 정리";
-      case "result":
-        return "컨텐츠 진행 결과";
-      case "collabo":
-        return "콜라보 제의";
-      default:
-        return "";
-    }
-  }
   return (
     <>
       <div className="wrapper">
-        <div className="title">{getTitleName(props.name)}</div>
+        <div className="title">{getEngToKorean(props.name)}</div>
         <span className="search-bar">검색창</span>
         <Link href={{ pathname: "/board/edit", query: { name: props.name } }}>
           <span className="edit">글쓰기</span>

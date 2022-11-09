@@ -1,8 +1,10 @@
-const AuthExpress = require("express");
+// const AuthExpress = require("express");
+import { express } from "../server";
+import { runQuery } from "../db";
+import { CONTENT_TYPE } from "../types/header";
 const AuthRequest = require("request");
 const qs = require("qs");
-const AuthRouter = AuthExpress.Router();
-import { runQuery } from "../db";
+const AuthRouter = express.Router();
 interface RevokeTokenData {
   client_id: string;
   token: string;
@@ -29,7 +31,15 @@ AuthRouter.get("/validate", (req: any, res: any) => {
       };
       AuthRequest(options, function (error: any, response: any, body: any) {
         if (response && response.statusCode == 200) {
-          res.json({ login: JSON.parse(body).login });
+          // console.log(JSON.parse(body));
+          const parsedBody = JSON.parse(body);
+          // console.log(
+          //   `${parsedBody.user_id}; ${parsedBody.login} is validated.`
+          // );
+          res.json({
+            id: parsedBody.user_id,
+            login: parsedBody.login,
+          });
         } else {
           res.send("Fail to validation");
         }

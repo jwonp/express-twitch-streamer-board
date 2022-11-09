@@ -4,12 +4,14 @@ import axios from "axios";
 import useSWR from "swr";
 import styles from "../styles/NavigatorBar.module.css";
 import Image from "next/image";
+import BoardPanel from "./BoardPanel";
+import MypagePanel from "./MypagePanel";
 import { useRouter } from "next/router";
-
+import { routerPath } from "../types/routePaths";
 export default function Navigator() {
   async function logout() {
     await axios.get("/authenticate/revoke");
-    mutate({ login: null });
+    mutate({ id: null });
     router.push("/login");
   }
   const router = useRouter();
@@ -28,14 +30,14 @@ export default function Navigator() {
     <nav className={styles.globalnav}>
       <div className={styles.container}>
         <div className={`${styles.section} ${styles.start}`}>
-          {data && data.login ? (
+          {data && data.id ? (
             <div className={`${styles.item}`}>
               <Image src={imgSrc} width={30} height={30} />
             </div>
           ) : (
-            <div></div>
+            <></>
           )}
-          {data && data.login ? (
+          {data && data.id ? (
             <Link href={"/"}>
               <div className={`${styles.item}`}>{data.login}</div>
             </Link>
@@ -43,30 +45,20 @@ export default function Navigator() {
             <div></div>
           )}
         </div>
-
         <div className={`${styles.section} ${styles.center}`}>
-          {data && data.login ? (
-            <>
-              <Link href={"/board/notice"}>
-                <div className={`${styles.item}`}>공지사항</div>
-              </Link>
-              <Link href={"/board/summary"}>
-                <div className={`${styles.item}`}>컨텐츠 정리</div>
-              </Link>
-              <Link href={"/board/result"}>
-                <div className={`${styles.item}`}>컨텐츠 진행 결과</div>
-              </Link>
-              <Link href={"/board/collabo"}>
-                <div className={`${styles.item}`}>콜라보 제의</div>
-              </Link>
-            </>
+          {data && data.id ? (
+            router.route === routerPath.mypage ? (
+              <MypagePanel />
+            ) : (
+              <BoardPanel />
+            )
           ) : (
             <div className={`${styles.center}`}></div>
           )}
         </div>
 
         <div className={`${styles.container} ${styles.end}`}>
-          {data && data.login ? (
+          {data && data.id ? (
             <div onClick={logout} className={`${styles.item}`}>
               로그아웃
             </div>
@@ -75,8 +67,10 @@ export default function Navigator() {
               <div className={`${styles.item}`}>로그인</div>
             </Link>
           )}
-          {data && data.login ? (
-            <div className={`${styles.item}`}>마이페이지</div>
+          {data && data.id ? (
+            <Link href={"/mypage"}>
+              <div className={`${styles.item}`}>마이페이지</div>
+            </Link>
           ) : (
             <div></div>
           )}

@@ -1,24 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ListBar from "./ListBar";
+import { list_bar } from "../types/content";
 import styles from "../styles/ListWrapper.module.css";
-interface dateType {
-  id: string;
-  title: string;
-  author: string;
-  views: number;
-  date: number;
-}
 
 export default function ListWrapper(props: { name: string }) {
-  const [dataSet, setDataSet] = useState<dateType[]>([]);
+  const [dataSet, setDataSet] = useState<list_bar[]>([]);
   const [index, setIndex] = useState<number>(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const [selected, setSelected] = useState(1);
   async function getBoardIndex() {
     axios.get(`/board/getboardindex?board=${props.name}`).then((res) => {
       const count = parseInt(res.data.count);
-      console.log(count);
       setMaxIndex(
         count % 10 !== 0 ? Math.trunc(count / 10) + 1 : Math.trunc(count / 10)
       );
@@ -39,7 +32,6 @@ export default function ListWrapper(props: { name: string }) {
   }, [selected]);
   return (
     <div>
-      {maxIndex}
       <div id="listbar-wrapper" className="listbar-wrapper">
         {dataSet && dataSet.length > 0 ? <ListBar data={dataSet[0]} /> : <></>}
         {dataSet && dataSet.length > 1 ? <ListBar data={dataSet[1]} /> : <></>}

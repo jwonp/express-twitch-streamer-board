@@ -4,7 +4,7 @@ import useSWR from "swr";
 import IncorrectAccess from "../components/IncorrectAccess";
 export default function BoardList(props: { name: string }) {
   const { data, error, mutate } = useSWR(`/authenticate/validate`);
-  if (data && data.login) {
+  if (data) {
     return (
       <div className="wrapper">
         <ListTitle name={props.name} />

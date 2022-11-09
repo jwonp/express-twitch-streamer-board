@@ -5,7 +5,7 @@
 }
 
 .content {
-    border: 1px solid sandybrown;
+    /* border: 1px solid sandybrown; */
     display: flex !important;
     flex-wrap: nowrap !important;
     position: relative !important;
@@ -19,7 +19,7 @@
 }
 
 .container {
-    border: 1px solid blanchedalmond;
+    /* border: 1px solid blanchedalmond; */
     padding: 16px;
     overflow: hidden !important;
     position: relative !important;

@@ -3,19 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { list_bar } from "../types/content";
 const likeSize = 11;
-interface dateType {
-  id: string;
-  title: string;
-  author: string;
-  views: number;
-  date: number;
-}
+
 function convertNumberToData(now: number) {
   const date = new Date(now);
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 }
-export default function ListBar(props: { data: dateType }) {
+export default function ListBar(props: { data: list_bar }) {
   const [title, setTitle] = useState("No Title");
   const [author, setAuthor] = useState("No Author");
   const [views, setViews] = useState(0);

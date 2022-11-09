@@ -13,7 +13,9 @@ export default function Layout(props: { children: JSX.Element }) {
           {props.children}
         </div>
 
-        <div className={styles.streamerMode}>{data ? <ChatBox /> : <></>}</div>
+        <div className={styles.streamerMode}>
+          {data && data.id ? <ChatBox /> : <></>}
+        </div>
       </div>
     </div>
   );

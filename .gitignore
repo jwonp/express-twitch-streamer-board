@@ -41,3 +41,4 @@ sql/table/token.sql
 .gitignore
 todo.txt
 DumyCodes
+types/*

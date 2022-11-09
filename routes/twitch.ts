@@ -1,7 +1,6 @@
-import { noSSR } from "next/dynamic";
-
-const TwitchExpress = require("express");
-const TwitchRouter = TwitchExpress.Router();
+// const TwitchExpress = require("express");
+import { express } from "../server";
+const TwitchRouter = express.Router();
 const axios = require("axios").default;
 TwitchRouter.get("/getIndexStreamerList", function (req: any, res: any) {
   if (req.session && req.session.passport && req.session.passport.user) {
