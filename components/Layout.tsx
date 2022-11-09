@@ -1,9 +1,11 @@
 import Navigator from "./Navigator";
 import styles from "../styles/Layout.module.css";
-import ChatBox from "./ChatBox";
+import ChatBox from "./ChatBot";
+import { useAppSelector } from "../redux/hooks";
 import useSWR from "swr";
 export default function Layout(props: { children: JSX.Element }) {
   const { data, error, mutate } = useSWR(`/authenticate/validate`);
+  const isChatbot = useAppSelector((state) => state.chatbotSwitch.value);
   return (
     <div className={styles.wrapper}>
       <Navigator />
@@ -14,7 +16,7 @@ export default function Layout(props: { children: JSX.Element }) {
         </div>
 
         <div className={styles.streamerMode}>
-          {data && data.id ? <ChatBox /> : <></>}
+          {data && data.id && isChatbot ? <ChatBox /> : <></>}
         </div>
       </div>
     </div>

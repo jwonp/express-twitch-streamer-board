@@ -4,12 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { list_bar } from "../types/content";
+import { convertDateNowToDate } from "../funcs/convertDateNowToDate";
 const likeSize = 11;
 
-function convertNumberToData(now: number) {
-  const date = new Date(now);
-  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-}
 export default function ListBar(props: { data: list_bar }) {
   const [title, setTitle] = useState("No Title");
   const [author, setAuthor] = useState("No Author");
@@ -22,8 +19,8 @@ export default function ListBar(props: { data: list_bar }) {
     if (props.data.title !== title) setTitle(props.data.title);
     if (props.data.author !== author) setAuthor(props.data.author);
     if (props.data.views !== views) setViews(props.data.views);
-    if (convertNumberToData(props.data.date) !== date) {
-      setDate(convertNumberToData(props.data.date));
+    if (convertDateNowToDate(props.data.date) !== date) {
+      setDate(convertDateNowToDate(props.data.date));
     }
     getLike();
   }, [props]);

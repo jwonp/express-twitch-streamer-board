@@ -8,6 +8,8 @@ import BoardPanel from "./BoardPanel";
 import MypagePanel from "./MypagePanel";
 import { useRouter } from "next/router";
 import { routerPath } from "../types/routePaths";
+import { switchChatbot } from "../redux/features/chatbotSwitch";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 export default function Navigator() {
   async function logout() {
     await axios.get("/authenticate/revoke");
@@ -17,6 +19,8 @@ export default function Navigator() {
   const router = useRouter();
   const [imgSrc, setImgSrc] = useState("");
   const { data, mutate } = useSWR(`/authenticate/validate`);
+  const dispatch = useAppDispatch();
+  const isChatbot = useAppSelector((state) => state.chatbotSwitch.value);
   useEffect(() => {
     axios({
       method: "get",
@@ -47,7 +51,7 @@ export default function Navigator() {
         </div>
         <div className={`${styles.section} ${styles.center}`}>
           {data && data.id ? (
-            router.route === routerPath.mypage ? (
+            router.route.startsWith(routerPath.mypage) ? (
               <MypagePanel />
             ) : (
               <BoardPanel />
@@ -56,8 +60,15 @@ export default function Navigator() {
             <div className={`${styles.center}`}></div>
           )}
         </div>
-
         <div className={`${styles.container} ${styles.end}`}>
+          <div
+            className={`${styles.item}`}
+            onClick={() => {
+              dispatch(switchChatbot());
+            }}
+          >
+            {isChatbot ? "chatbot off" : "chatbot on"}
+          </div>
           {data && data.id ? (
             <div onClick={logout} className={`${styles.item}`}>
               로그아웃
@@ -68,13 +79,18 @@ export default function Navigator() {
             </Link>
           )}
           {data && data.id ? (
-            <Link href={"/mypage"}>
-              <div className={`${styles.item}`}>마이페이지</div>
-            </Link>
+            router.route.startsWith(routerPath.mypage) ? (
+              <Link href={"/"}>
+                <div className={`${styles.item}`}>메인으로</div>
+              </Link>
+            ) : (
+              <Link href={"/mypage"}>
+                <div className={`${styles.item}`}>마이페이지</div>
+              </Link>
+            )
           ) : (
             <div></div>
           )}
-          {/* <div className={`${styles.item}`}>고객센터</div> */}
         </div>
       </div>
     </nav>

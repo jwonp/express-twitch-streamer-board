@@ -1,44 +1,36 @@
-export const getEngToKorean = (name: string): string => {
-  switch (name) {
-    case "notice":
-      return "공지사항";
-    case "summary":
-      return "컨텐츠 정리";
-    case "result":
-      return "컨텐츠 진행 결과";
-    case "collabo":
-      return "콜라보 제의";
-    default:
-      return "";
-  }
+type ObjType = {
+  [index: string]: string;
+  "notice"?: string;
+  "summary"?: string;
+  "result"?: string;
+  "collabo"?: string;
+  "NOT"?: string;
+  "SUM"?: string;
+  "RES"?: string;
+  "COL"?: string;
+};
+export const getEngToKorean: ObjType = {
+  "notice": "공지사항",
+  "summary": "컨텐츠 정리",
+  "result": "컨텐츠 진행 결과",
+  "collabo": "콜라보 제의",
+};
+export const getEngToShort: ObjType = {
+  "notice": "NOT",
+  "summary": "SUM",
+  "result": "RES",
+  "collabo": "COL",
 };
 
-export const getEngToShort = (name: string): string => {
-  switch (name) {
-    case "notice":
-      return "NOT";
-    case "summary":
-      return "SUM";
-    case "result":
-      return "RES";
-    case "collabo":
-      return "COL";
-    default:
-      return "";
-  }
+export const getShortToKorean: ObjType = {
+  "NOT": "공지사항",
+  "SUM": "컨텐츠 정리",
+  "RES": "컨텐츠 진행 결과",
+  "COL": "콜라보 제의",
 };
-
-export const getShortToKorean = (name: string): string => {
-  switch (name) {
-    case "NOT":
-      return "공지사항";
-    case "SUM":
-      return "컨텐츠 정리";
-    case "RES":
-      return "컨텐츠 진행 결과";
-    case "COL":
-      return "콜라보 제의";
-    default:
-      return "";
-  }
+export const getShortToEng: ObjType = {
+  "NOT": "notice",
+  "SUM": "summary",
+  "RES": "result",
+  "COL": "collabo",
 };

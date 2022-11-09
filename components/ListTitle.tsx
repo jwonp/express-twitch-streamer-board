@@ -4,7 +4,7 @@ export default function ListTitle(props: { name: string }) {
   return (
     <>
       <div className="wrapper">
-        <div className="title">{getEngToKorean(props.name)}</div>
+        <div className="title">{getEngToKorean[props.name]}</div>
         <span className="search-bar">검색창</span>
         <Link href={{ pathname: "/board/edit", query: { name: props.name } }}>
           <span className="edit">글쓰기</span>

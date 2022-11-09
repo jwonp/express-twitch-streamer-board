@@ -5,6 +5,7 @@ import { getEngToShort, getShortToKorean } from "../funcs/convertBoardTitle";
 import {
   content as content_type,
   board_content as board_content_type,
+  mypage_content_list_bar,
 } from "../types/content";
 // const axios = require("axios").default;
 const BoardRouter = BoardExpress.Router();
@@ -15,7 +16,7 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
     const now = Date.now();
     const SqlData: content_type = {
       content_id: CryptoJS.AES.encrypt(
-        `${getEngToShort(req.body.board)}?${now}?${
+        `${getEngToShort[req.body.board]}?${now}?${
           req.session.passport.user.data[0].id
         }`,
         process.env.BOARD_SECRET
@@ -23,7 +24,7 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
         .toString()
         .replaceAll("+", "3")
         .replaceAll("/", "5"),
-      board: getEngToShort(req.body.board),
+      board: getEngToShort[req.body.board],
       title: req.body.title,
       author: req.session.passport.user.data[0].id,
       date: now,
@@ -41,19 +42,31 @@ BoardRouter.post("/uploadContent", (req: any, res: any) => {
   }
 });
 BoardRouter.get("/getboardindex", (req: any, res: any) => {
-  getallContentCountByBoard(getEngToShort(req.query.board)).then((response) => {
+  getallContentCountByBoard(getEngToShort[req.query.board]).then((response) => {
     res.json(response[0]);
   });
 });
 BoardRouter.get("/getboardlist", (req: any, res: any) => {
   if (req.session && req.session.passport && req.session.passport.user) {
-    getContentsBySelected(getEngToShort(req.query.board), req.query.index)
+    getContentsBySelected(getEngToShort[req.query.board], req.query.index)
       .then((response) => {
         res.json(response);
       })
       .catch((reason) => {
         res.sendStatus(401);
       });
+  }
+});
+BoardRouter.get("/getContentsByUser", (req: any, res: any) => {
+  if (req.session && req.session.passport && req.session.passport.user) {
+    const user = req.session.passport.user;
+    console.log(user);
+    getContentsByUser(user.data[0].id).then(
+      (result: mypage_content_list_bar[]) => {
+        console.log(result);
+        res.json(result);
+      }
+    );
   }
 });
 BoardRouter.post("/getContent", (req: any, res: any) => {
@@ -69,7 +82,7 @@ BoardRouter.post("/getContent", (req: any, res: any) => {
               .replaceAll("%3A", ":")
               .replaceAll("%2F", "/");
             const ContentResponse: board_content_type = {
-              board: getShortToKorean(result.board),
+              board: getShortToKorean[result.board],
               title: result.title,
               author: display_name,
               update_date: result.update_date,
@@ -204,5 +217,10 @@ async function getViews(contentID: string) {
     `SELECT views FROM content WHERE content_id = "${contentID}"`
   );
 }
+const getContentsByUser = async (userID: string) => {
+  return await runQuery(
+    `SELECT content_id, board, title, update_date FROM content WHERE author="${userID}"`
+  );
+};
 module.exports = BoardRouter;
 export {};

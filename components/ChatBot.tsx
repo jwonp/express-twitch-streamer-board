@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import { reqGETbyClient } from "../funcs/request";
-export default function ChatBox() {
+export default function ChatBot() {
   const socket = useRef<Socket>(null);
   const $chatContainer = useRef<HTMLDivElement>(null);
 
@@ -40,8 +40,15 @@ export default function ChatBox() {
   }
   return (
     <div>
-      <div>hi</div>
+      <div className="title">Chat Setting</div>
       <div ref={$chatContainer} className="chatContainer"></div>
+      <style jsx>{`
+        .title {
+          font-size: larger;
+          font-weight: bold;
+          padding: 5% 1%;
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+
+    width: 98%;
+    justify-content: space-between;
+    border: 1px solid #E7F6F2;
+    border-radius: 7px;
+    margin: 2% 1%;
+}
+
+.item {
+    text-align: left;
+    width: 26%;
+    font-size: medium;
+    padding: 1% 0.5%;
+}
+
+.textAlignLeft {
+    text-align: left;
+}
+
+.textAlignRight {
+    text-align: right;
+
+}
+
+.marginRight {
+    margin-right: 5%;
+}
+
+.marginLeft {
+    margin-left: 5%;
+}
