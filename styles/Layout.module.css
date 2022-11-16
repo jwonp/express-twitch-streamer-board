@@ -18,6 +18,10 @@
     width: 400px;
 }
 
+.hidden {
+    display: none;
+}
+
 .container {
     /* border: 1px solid blanchedalmond; */
     padding: 16px;

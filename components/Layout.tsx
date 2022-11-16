@@ -14,10 +14,13 @@ export default function Layout(props: { children: JSX.Element }) {
         <div id={"root-layout"} className={styles.container}>
           {props.children}
         </div>
-
-        <div className={styles.streamerMode}>
-          {data && data.id && isChatbot ? <ChatBox /> : <></>}
-        </div>
+        {data && data.id ? (
+          <div className={isChatbot ? styles.streamerMode : styles.hidden}>
+            <ChatBox />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

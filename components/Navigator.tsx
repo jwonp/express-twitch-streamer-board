@@ -46,7 +46,7 @@ export default function Navigator() {
               <div className={`${styles.item}`}>{data.login}</div>
             </Link>
           ) : (
-            <div></div>
+            <></>
           )}
         </div>
         <div className={`${styles.section} ${styles.center}`}>
@@ -61,14 +61,18 @@ export default function Navigator() {
           )}
         </div>
         <div className={`${styles.container} ${styles.end}`}>
-          <div
-            className={`${styles.item}`}
-            onClick={() => {
-              dispatch(switchChatbot());
-            }}
-          >
-            {isChatbot ? "chatbot off" : "chatbot on"}
-          </div>
+          {data && data.id ? (
+            <div
+              className={`${styles.item}`}
+              onClick={() => {
+                dispatch(switchChatbot());
+              }}
+            >
+              {isChatbot ? "chatbot off" : "chatbot on"}
+            </div>
+          ) : (
+            <></>
+          )}
           {data && data.id ? (
             <div onClick={logout} className={`${styles.item}`}>
               로그아웃
@@ -89,7 +93,7 @@ export default function Navigator() {
               </Link>
             )
           ) : (
-            <div></div>
+            <></>
           )}
         </div>
       </div>

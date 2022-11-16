@@ -41,7 +41,12 @@ export default function ChatBot() {
   return (
     <div>
       <div className="title">Chat Setting</div>
-      <div ref={$chatContainer} className="chatContainer"></div>
+      <div ref={$chatContainer} className="chatContainer">
+        <div>option 1</div>
+        <div>option 2</div>
+        <div>option 3</div>
+        <div>option 4</div>
+      </div>
       <style jsx>{`
         .title {
           font-size: larger;

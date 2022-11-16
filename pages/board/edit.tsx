@@ -139,7 +139,7 @@ export default function edit() {
           </button>
         </div>
         <div className={`${styles.editorBody}`}>
-          <div className={`${styles.toolbar}`}>
+          <div className={`${styles.toolbar} ${styles.hidden}`}>
             <textarea
               ref={$copyContent}
               id="copyContent"

@@ -1,18 +1,23 @@
 .wrapper {
     margin: 0 auto;
     padding: 3px;
-    border: 1px solid salmon;
     width: 90%;
-    height: 95%;
+    height: 98%;
 }
+
+
 
 .editorHeader {
     margin: 3px;
     padding: 5px;
-    border: 1px solid gold;
     display: flex;
     justify-content: space-between;
-    height: 60px;
+    border-bottom: 1px double #E7F6F2;
+    height: 9%;
+}
+
+.editorBody {
+    height: 90%;
 }
 
 .boardName {
@@ -33,7 +38,7 @@
     background-color: #2C3333;
     color: #E7F6F2;
     border: none;
-    border: 1px solid #e7f6f2;
+    border: 1px solid #E7F6F2;
     border-radius: 3px;
 }
 
@@ -41,17 +46,17 @@
 
 .toolbar {
     display: flex;
-    /* justify-content: space-between; */
     margin: 3px;
     padding: 5px;
     height: 50px;
-    border: 1px solid wheat;
+    /* border: 1px solid wheat; */
 }
 
 .titleWrapper {
     display: flex;
     flex-direction: column;
-
+    border: 1px solid #e7f6f2;
+    padding: 3px 12px;
 }
 
 .titleLabel {
@@ -65,8 +70,6 @@
     padding: 0;
     background-color: #2C3333;
     border: none;
-    border: 1px solid #e7f6f2;
-
     color: #E7F6F2;
 }
 
@@ -77,29 +80,33 @@
 .content {
     margin: 3px;
     padding: 5px;
-    border: 1px solid darkseagreen;
-    height: 735px;
+    /* height: 735px; */
+    height: 95%;
     font-size: 26px;
     overflow-y: scroll !important;
     text-align: left;
+
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.content::-webkit-scrollbar {
+    display: none;
 }
 
 .content:focus {
     outline: none;
 }
 
-
-
 .contentAddBtn {
-    border: 1px solid tan;
     text-align: center;
 }
 
-
-
 .contentImg {
     width: 100%;
-
 }
 
 .hidden {
